@@ -1,3 +1,4 @@
+user içi swaggerdan üye olun
 ![Screenshot_11](https://github.com/aylinayduvan1/rea-frontend-task/assets/98785023/1088650e-ace7-4438-ba45-4cbb5af14651)
 ![Screenshot_12](https://github.com/aylinayduvan1/rea-frontend-task/assets/98785023/264d82fe-20e0-4278-8cae-fa0948c124b0)
 ![Screenshot_5](https://github.com/aylinayduvan1/rea-frontend-task/assets/98785023/e076935c-fd4e-4b75-90ae-2b1bc699d91d)
