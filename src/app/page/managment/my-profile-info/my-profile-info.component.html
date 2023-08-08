@@ -1,0 +1,72 @@
+ <div class="container" style=" height: 100vh; display: flex; justify-content: center; align-items: center;">
+            <div class="card" style="width: 400px; height: 500px; display: flex; justify-content: center; align-items: center;" *ngIf="currentUser">
+              <img   *ngIf="currentUser.userType === 0" src="assets/hacker.png" alt="" style="width: 35%; margin-bottom: 15px;">
+              <img  *ngIf="currentUser.userType === 1" src="assets/user-icon.png" alt="" style="width: 35%; margin-bottom: 15px;">
+
+                <h6 style="font-style: italic;" *ngIf="currentUser.userType === 0">Admin</h6>
+                <h6  style="font-style: italic;"  *ngIf="currentUser.userType === 1">Kullanıcı</h6>
+                <div class="card col-9 mt-4 mb-5 pt-3" style="display: flex; align-items: center; gap: 10px;">
+                  <h6>{{ currentUser.userName }} {{ currentUser.surName }}  </h6>  
+                  <h6>{{ currentUser.gsm }}</h6>  
+                  <h6>{{ currentUser.adress }}</h6>  
+                </div>
+                <div class="col-9">
+
+                  <button type="button" class="btn edit-btn w-100"  (click)="openEditDialog(currentUser.id)">Düzenle</button>
+                </div>
+
+
+                <div class="modal fade" tabindex="-1" [class.show]="editDialog " *ngIf="usersEdit">
+                  <!--CSS'i düzenlemezsem çalışmaz-->
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">İlan Güncelle</h5>
+                      </div>
+                      <div class="modal-body">
+                        <form ngModelOptions="{standalone: true}">
+                          <div class="row">
+                            <div class="col-6 mb-2 mt-3">
+                              <span class="p-float-label">
+                                <input name="advert_title" [(ngModel)]="usersEdit.userName"  pInputText
+                                  placeholder="Hayvan adı giriniz" class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="advert_title"> Adı</label>
+                              </span>
+                            </div>
+                            <div class="col-6 mb-2 mt-3">
+                              <span class="p-float-label">
+                                <input name="advert_date" [(ngModel)]="usersEdit.surName" pInputText class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="advert_date">soyad</label>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6 mb-2 mt-3" style="display: flex;">
+                              <span class="p-float-label">
+                                <input name="advert_no" [(ngModel)]="usersEdit.adress" pInputText class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="advert_no">adres</label>
+                              </span>
+                            </div>
+                            <div class="col-6 mb-2 mt-3" style="display: flex;">
+                              <span class="p-float-label">
+                                <input name="advert_img" [(ngModel)]="usersEdit.gsm" pInputText class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="advert_img">telefon numarası</label>
+                              </span>
+                            </div>
+                          </div>
+      
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn" (click)="closeEditModal()" style="width: 30%;">İptal</button>
+                          <button pButton pRipple  class="p-button-text" *ngIf="usersEdit" (click)="onUpdate(usersEdit.id, usersEdit)">Güncelle</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+</div>

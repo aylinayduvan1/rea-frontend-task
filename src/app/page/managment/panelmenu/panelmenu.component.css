@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s;
+  /* Diğer sidebar stillemeleri */
+}
+
+.content {
+  flex-grow: 1;
+  transition: flex-grow 0.3s;
+  /* Diğer içerik stillemeleri */
+}
+
+.sidebar.open {
+  width: 80px;
+}
+
+.content.narrow {
+  flex-grow: 2;
+}
+
+
+.panel-content a{
+  text-decoration: none;
+  color: white;
+  margin-left: 15px;
+}
+
+.panel-content{
+  color:white; display: flex; flex-direction: column; justify-content: center;
+}
+/* Panel içeriği ve sütunlar */
+.panel-content .col {
+  background-color: rgb(21, 39, 85);
+  border-radius: 12px;
+  padding-left: 22px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hovver durumunda daha belirgin bir gölge */
+  transition: background-color 0.9s, box-shadow 0.9s; /* Geçiş efektleri eklendi */
+  white-space: nowrap;
+
+}
+
+/* Hover efekti */
+.panel-content .col:hover {
+  background-color: rgb(33, 59, 126);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Hovver durumunda daha belirgin bir gölge */
+
+}
+
+/* Active (tıklanmış) durumu */
+.panel-content .col:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Tıklanmış durumunda hafif bir gölge */
+}
+
+

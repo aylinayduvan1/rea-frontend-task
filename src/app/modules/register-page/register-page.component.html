@@ -1,0 +1,78 @@
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div class="container"  style="width: 800px;">
+        <div class="card shadow flip-card " >  
+            <div class="card-body"  style=" display: flex;  align-items: center; flex-direction: column;" >
+                    <div class="card-detail  col-12" style="  padding: 30px;">
+                        <div class="col-md-12">
+                            <div class="lottie-container" #lottieContainer></div>
+                          </div>
+                        <form   (submit)="register()" ngModelOptions="{standalone: true}">
+                        <div class="row">
+                            <div class="col-6 mb-3 mt-3" >
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <input name="username" pInputText placeholder="Adınız" [(ngModel)]="registerRequest.userName" class="w-100"  style="border: solid 1px rgba(181, 181, 181, 0.267);"required>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3 mt-3" >
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <input name="username" pInputText placeholder="Soyadınız" [(ngModel)]="registerRequest.surName" class="w-100"  style="border: solid 1px rgba(181, 181, 181, 0.267);"required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-6 mb-3">
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <input  name="username" pInputText placeholder="E-posta adresi" name="password"  class="w-100" [(ngModel)]="registerRequest.email" style="border: solid 1px  rgba(181, 181, 181, 0.267);"required>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <input  [type]="'password'" pInputText placeholder="şifre" name="password"  class="w-100" [(ngModel)]="registerRequest.password" style="border: solid 1px  rgba(181, 181, 181, 0.267);"required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-6 mb-3">
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <input  name="username" pInputText placeholder="adres"  class="w-100" [(ngModel)]="registerRequest.adress" style="border: solid 1px  rgba(181, 181, 181, 0.267);"required>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <input  [type]="'gsm'" pInputText placeholder="telefon numarası" name="username"  class="w-100" [(ngModel)]="registerRequest.gsm" style="border: solid 1px  rgba(181, 181, 181, 0.267);"required>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        
+                        <div class="row mt-auto" >
+                            <div class="col-12">
+                                <button class="btn login-btn " type="submit"   (click)="register()">üye ol</button>
+                            </div>
+                        </div>
+                        </form>
+           </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

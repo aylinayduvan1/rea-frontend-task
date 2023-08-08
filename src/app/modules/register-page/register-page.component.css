@@ -1,0 +1,15 @@
+.login-btn{
+    background-color: rgb(21, 39, 85);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hovver durumunda daha belirgin bir gölge */
+    transition: background-color 0.9s, box-shadow 0.9s; /* Geçiş efektleri eklendi */
+    color: white;
+    width: 100%;
+
+  }
+
+  .login-btn:hover{
+      background-color: rgb(33, 59, 126);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Hovver durumunda daha belirgin bir gölge */
+    
+    
+  }

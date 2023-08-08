@@ -1,0 +1,208 @@
+  <!--TOOLBAR-->
+  <div class="container" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; padding: 20px 0px;  width: 90%;" >
+    <p-toast></p-toast>
+      <p-toolbar styleClass="mb-4 gap-2">
+        <h4>  Tüm Tivitler ve atan kullanıcılar
+        </h4>
+        <div>
+          <p-button   (click)="showDialog()" label="Ekle" styleClass="p-button-raised p-button-text p-button-danger"></p-button>
+
+          
+          <p-dialog header="Header" [(visible)]="visible" [style]="{ width: '18vw' }">
+                
+            <ng-template pTemplate="header">
+                <span class="text-xl font-bold">Tivit Ekle
+                </span>
+            </ng-template>
+           
+        <div style="display: flex;"> 
+            <div style="display: flex;  margin-bottom: 25px; flex-direction: column;">                     
+                    <div style="margin-top: 80px; ">
+                        <span class="p-float-label">
+                            <input pInputText id="catid" [(ngModel)]="tweetRequest.userId" />
+                            <label htmlFor="catid">kullanıcı id</label>
+                        </span>
+                    </div>
+                  
+                    <div style="margin-top: 25px;">
+                      <div class="row">
+                        <div class="col-12 mb-2 mt-3">
+                          <span class="p-float-label">
+                            <textarea name="advert_text" [(ngModel)]="tweetRequest.content" pInputTextarea
+                              placeholder="İlan Açıklama" class="w-100"
+                              style="border: solid 1px rgba(181, 181, 181, 0.267);"></textarea>
+                            <label htmlFor="advert_text">Tivit içeriği</label>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+           </div>  
+            </div>  
+            <ng-template pTemplate="footer">
+                 <p-button   styleClass="p-button-text" (click)="onCreate(tweetRequest) ">Kaydet</p-button>
+                       
+            </ng-template>
+        </p-dialog>
+         
+        </div>
+
+      </p-toolbar>
+              
+    
+      <!--TABLE -->
+      <p-table
+          #dt
+          [value]="tweets"
+          [globalFilterFields]="['name', 'country.name', 'representative.name']"
+          [tableStyle]="{ 'min-width': '65rem' }"
+          [rowHover]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+          dataKey="id"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true"
+      >
+  
+      <ng-template pTemplate="header">
+        
+        <tr class="header-custom" >
+            <th style="width: 4rem">
+            </th>
+            <th pSortableColumn="name" style="min-width:5rem">Tweet </th>
+            <th pSortableColumn="price">Ad </th>
+            <th pSortableColumn="mail">Soyad </th>
+            <th pSortableColumn="mail">Eposta </th>
+            <th pSortableColumn="category" style="min-width:8rem">Adres </th>
+            <th pSortableColumn="rating">telefon numarası</th>
+            <th pSortableColumn="inventoryStatus" style="min-width:2rem; ">Sil </th>
+            <th></th>
+        </tr>
+      </ng-template>
+  
+    
+      <ng-template pTemplate="body" let-tweets>
+          <tr >
+            <td>{{ tweets.user.id }}</td>  
+
+            <td>{{ tweets.content }}</td>  
+              <td>{{ tweets.user.userName }}</td>  
+              <td>{{ tweets.user.surName }}</td>  
+              <td>{{ tweets.user.email }}</td>  
+              <td>{{ tweets.user.adress }}</td>  
+              <td>{{ tweets.user.gsm }}</td>  
+          <td>
+              
+                <!--sil-- openwindow-->
+                <p-button (click)="onDelete(tweets.id)" icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined"></p-button>
+  
+              
+                <span class="button-space" style="margin-right: 10px;"></span>
+  
+                <p-button (click)="openEditDialog(tweets.id)" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined"></p-button>
+  
+  
+              
+              </td>
+  
+              <div class="modal fade" tabindex="-1" [class.show]="modalOpen">
+                <!--CSS'i düzenlemezsem çalışmaz-->
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Kullanıcı silinecek.</h5>
+                    </div>
+                    <div class="modal-body">
+                      <p>Silmek istediğinize emin misiniz?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <p-button (click)="onDelete(tweets.id)" icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined"></p-button>
+  
+                      <button type="button" class="btn " (click)="closeModal()">İptal</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+  
+              <div class="modal fade" tabindex="-1" [class.show]="editDialog " *ngIf="tweetsEdit">
+                  <!--CSS'i düzenlemezsem çalışmaz-->
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">User Güncelle</h5>
+                      </div>
+                      <div class="modal-body">
+                        <form ngModelOptions="{standalone: true}">
+                          <div class="row">
+                            <div class="col-6 mb-2 mt-3">
+                              <span class="p-float-label">
+                                <input name="userName" [(ngModel)]="tweetsEdit.user.userName"  pInputText
+                                  class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="userName">Ad</label>
+                              </span>
+                            </div>
+                            <div class="col-6 mb-2 mt-3">
+                              <span class="p-float-label">
+                                <input name="surName" [(ngModel)]="tweetsEdit.user.surName" pInputText class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="surName">Soyad</label>
+                              </span>
+                            </div>
+                          
+                          </div>
+                          <div class="row">
+                          
+                            <div class="col-6 mb-2 mt-3" style="display: flex;">
+                              <span class="p-float-label">
+                                <input name="schoolName" [(ngModel)]="tweetsEdit.user.email" pInputText class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="schoolName">Email</label>
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div class="row">
+                            <div class="col-6 mb-2 mt-3" style="display: flex;">
+                              <span class="p-float-label">
+                                <input name="className" [(ngModel)]="tweetsEdit.user.adress" pInputText class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="className">Adres</label>
+                              </span>
+                            </div>
+                            <div class="col-6 mb-2 mt-3" style="display: flex;">
+                              <span class="p-float-label">
+                                <input name="schoolNumber" [(ngModel)]="tweetsEdit.user.gsm" pInputText class="w-100"
+                                  style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                                <label htmlFor="schoolNumber">Telefon Numarası</label>
+                              </span>
+                            </div>
+                            <div class="col-6 mb-2 mt-3" style="display: flex;">
+                            
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn" (click)="closeEditModal()" style="width: 25%;">İptal</button>
+                          <button pButton pRipple  class="p-button-text" *ngIf="tweetsEdit" (click)="onUpdate(tweetsEdit.id, tweetsEdit)">Güncelle</button>
+  
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 
+                  backend'den id'yi çekemediğimiz için id'yi tespit edemedi frontend kısmında :) aklımızdao lsun. swaggerda getall'da id yi çekemedik :D
+                --> 
+            </tr>
+  
+          
+      </ng-template>
+
+
+      
+
+    
+  

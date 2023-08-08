@@ -1,0 +1,153 @@
+  <!--TOOLBAR-->
+<div class="container" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; padding: 20px 0px;  width: 90%;" >
+  <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+      <h4>  Kullanıcı Listesi
+      </h4>
+    </p-toolbar>
+
+    <!--TABLE -->
+    <p-table
+        #dt
+        [value]="users"
+        [globalFilterFields]="['name', 'country.name', 'representative.name']"
+        [tableStyle]="{ 'min-width': '65rem' }"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+    >
+
+    <ng-template pTemplate="header">
+      
+      <tr class="header-custom" >
+          <th style="width: 4rem">
+          </th>
+          <th pSortableColumn="name" style="min-width:5rem">Ad </th>
+          <th pSortableColumn="price">Soyad </th>
+          <th pSortableColumn="mail">E-posta </th>
+          <th pSortableColumn="category" style="min-width:8rem">Adres </th>
+          <th pSortableColumn="rating">telefon numarası</th>
+          <th pSortableColumn="inventoryStatus" style="min-width:2rem; ">Sil </th>
+          <th></th>
+      </tr>
+    </ng-template>
+
+  
+    <ng-template pTemplate="body" let-user>
+        <tr >
+            <td>{{ user.id }}</td>  
+            <td>{{ user.userName }}</td>  
+            <td>{{ user.surName }}</td>  
+            <td>{{ user.email }}</td>  
+            <td>{{ user.adress }}</td>  
+            <td>{{ user.gsm }}</td>  
+        <td>
+            
+              <!--sil-- openwindow-->
+              <p-button (click)="openModal()" icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined "></p-button>
+
+            
+              <span class="button-space" style="margin-right: 10px;"></span>
+
+              <p-button (click)="openEditDialog(user.id)" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined"></p-button>
+
+
+            
+            </td>
+
+            <div class="modal fade" tabindex="-1" [class.show]="modalOpen">
+              <!--CSS'i düzenlemezsem çalışmaz-->
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Kullanıcı silinecek.</h5>
+                  </div>
+                  <div class="modal-body">
+                    <p>Silmek istediğinize emin misiniz?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <p-button (click)="onDelete(user.id)" icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-outlined"></p-button>
+
+                    <button type="button" class="btn " (click)="closeModal()">İptal</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="modal fade" tabindex="-1" [class.show]="editDialog " *ngIf="usersEdit">
+                <!--CSS'i düzenlemezsem çalışmaz-->
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">User Güncelle</h5>
+                    </div>
+                    <div class="modal-body">
+                      <form ngModelOptions="{standalone: true}">
+                        <div class="row">
+                          <div class="col-6 mb-2 mt-3">
+                            <span class="p-float-label">
+                              <input name="userName" [(ngModel)]="usersEdit.userName"  pInputText
+                                class="w-100"
+                                style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                              <label htmlFor="userName">Ad</label>
+                            </span>
+                          </div>
+                          <div class="col-6 mb-2 mt-3">
+                            <span class="p-float-label">
+                              <input name="surName" [(ngModel)]="usersEdit.surName" pInputText class="w-100"
+                                style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                              <label htmlFor="surName">Soyad</label>
+                            </span>
+                          </div>
+                        
+                        </div>
+                        <div class="row">
+                        
+                          <div class="col-6 mb-2 mt-3" style="display: flex;">
+                            <span class="p-float-label">
+                              <input name="schoolName" [(ngModel)]="usersEdit.email" pInputText class="w-100"
+                                style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                              <label htmlFor="schoolName">Email</label>
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div class="row">
+                          <div class="col-6 mb-2 mt-3" style="display: flex;">
+                            <span class="p-float-label">
+                              <input name="className" [(ngModel)]="usersEdit.adress" pInputText class="w-100"
+                                style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                              <label htmlFor="className">Adres</label>
+                            </span>
+                          </div>
+                          <div class="col-6 mb-2 mt-3" style="display: flex;">
+                            <span class="p-float-label">
+                              <input name="schoolNumber" [(ngModel)]="usersEdit.gsm" pInputText class="w-100"
+                                style="border: solid 1px rgba(181, 181, 181, 0.267);" required>
+                              <label htmlFor="schoolNumber">Telefon Numarası</label>
+                            </span>
+                          </div>
+                          <div class="col-6 mb-2 mt-3" style="display: flex;">
+                          
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" (click)="closeEditModal()" style="width: 25%;">İptal</button>
+                        <button pButton pRipple  class="p-button-text" *ngIf="usersEdit" (click)="onUpdate(usersEdit.id, usersEdit)">Güncelle</button>
+
+                      </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 
+                backend'den id'yi çekemediğimiz için id'yi tespit edemedi frontend kısmında :) aklımızdao lsun. swaggerda getall'da id yi çekemedik :D
+              --> 
+          </tr>
+
+        
+    </ng-template>
